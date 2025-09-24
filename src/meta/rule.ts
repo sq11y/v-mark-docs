@@ -34,7 +34,7 @@ export const rule: RuleBlock = (state, startLine, _, silent) => {
   /**
    * Expect the pattern `[?<title>]: <path>.vue`
    */
-  const path = state.src.slice(pos, max);
+  const path = state.src.slice(pos, max).trim();
 
   if (!path.endsWith("vue")) {
     return false;

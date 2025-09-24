@@ -172,6 +172,7 @@ export default defineConfig({
 
 > [!WARNING]
 > Only scripts with setup syntax are supported.
+> The title for the component documentation can not include spaces anywhere inside the square brackets. e.g. `[? Button]` would be invalid compared to `[?Button]`.
 
 ```md
 <script setup>
@@ -182,5 +183,5 @@ export default defineConfig({
 
 <ButtonPlayground />
 
-[? Button]: ../components/Button.vue
+[?Button]: ../components/Button.vue
 ```

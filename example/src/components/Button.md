@@ -1,3 +1,7 @@
+<script setup>
+  import ButtonComponent from './Button.vue';
+</script>
+
 # Documentation example
 
 An example show-casing `v-mark-docs`.
@@ -38,3 +42,9 @@ export default defineConfig({
 In this case we're just showing a simple title and `pre` tag with the meta data so the result below isn't beautiful, but you could get creative with it!
 
 [?Button]: ./Button.vue
+
+## Components
+
+<ButtonComponent>
+  This example button does nothing
+</ButtonComponent>

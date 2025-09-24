@@ -48,6 +48,22 @@
   }>();
 </script>
 
+<style scoped>
+  button {
+    cursor: pointer;
+
+    inline-size: fit-content;
+    padding: 0.75em 1.25em;
+
+    border-radius: 4px;
+    border: 1px solid #333;
+
+    background-color: #eee;
+
+    font-size: 1rem;
+  }
+</style>
+
 <docs lang="md">
 A description for _this_ component.
 </docs>

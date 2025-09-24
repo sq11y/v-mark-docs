@@ -13,7 +13,7 @@
     display: grid;
     place-content: center;
 
-    max-width: min(90vw, 50rem);
+    max-inline-size: min(90vw, 50rem);
     margin-inline: auto;
 
     background-color: #fafafa;
@@ -28,7 +28,7 @@
     padding: 2rem;
 
     white-space: pre-wrap;
-    max-width: 100%;
+    max-inline-size: 100%;
 
     background-color: #333;
     color: #fafafa;

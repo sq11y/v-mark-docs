@@ -3,6 +3,8 @@ name: Publish package
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "example/**"
   release:
     types: [created]
 

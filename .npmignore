@@ -1,6 +1,7 @@
 /.github
 
 /src
+/example
 /node_modules
 
 .gitignore

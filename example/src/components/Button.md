@@ -43,7 +43,7 @@ In this case we're just showing a simple title and `pre` tag with the meta data 
 
 [?Button]: ./Button.vue
 
-## Components
+## Use components in markdown
 
 <ButtonComponent>
   This example button does nothing

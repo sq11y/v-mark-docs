@@ -25,7 +25,29 @@
 
   defineProps<ButtonProps>();
 
-  const emit = defineEmits<{ click: [event: KeyboardEvent] }>();
+  /**
+   * A random model value
+   * for demonstration purposes.
+   */
+  defineModel<boolean>({
+    default: true,
+  });
 
-  defineSlots<{ default: any }>();
+  const emit = defineEmits<{
+    /**
+     * The event triggered on click.
+     */
+    click: [event: MouseEvent];
+  }>();
+
+  defineSlots<{
+    /**
+     * The label for the button.
+     */
+    default: any;
+  }>();
 </script>
+
+<docs lang="md">
+A description for _this_ component.
+</docs>

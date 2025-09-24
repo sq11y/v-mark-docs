@@ -122,66 +122,8 @@ export default defineConfig({
 })
 ```
 
-## Examples
+## Example
 
-### Component with documentation
-
-<!-- prettier-ignore -->
-```html
-<template>
-  <button @click="emit('click', $event)">
-    <slot />
-  </button>
-</template>
-
-<script lang="ts" setup>
-  export interface ButtonProps {
-    /**
-     * The `type` attribute for the button.
-     *
-     * @default "button"
-     */
-    type?: "button" | "submit";
-  }
-
-  const props = withDefaults(defineProps<ButtonProps>(), {
-    type: "button",
-  });
-
-  const emit = defineEmits<{
-    /**
-     * The event triggered on click.
-     */
-    click: [event: MouseEvent];
-  }>();
-
-  defineSlots<{
-    /**
-     * The label for the button.
-     */
-    default: any;
-   }>();
-</script>
-
-<docs lang="md">
-  A description for _this_ component.
-</docs>
 ```
-
-### `.md` file as a component
-
-> [!WARNING]
-> Only scripts with setup syntax are supported.
-> The title for the component documentation can not include spaces anywhere inside the square brackets. e.g. `[? Button]` would be invalid compared to `[?Button]`.
-
-```md
-<script setup>
-  import ButtonPlayground from './ButtonPlayground.vue'
-</script>
-
-# Button
-
-<ButtonPlayground />
-
-[?Button]: ../components/Button.vue
+cd example && npm run dev
 ```

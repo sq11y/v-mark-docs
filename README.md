@@ -1,9 +1,9 @@
 # v-mark-docs
 
-`v-mark-docs` uses [markdown-it](https://github.com/markdown-it/markdown-it) and [@mdit-vue/plugin-sfc](https://github.com/mdit-vue/mdit-vue/tree/main/packages/plugin-sfc) to turn markdown files into [**Vue** components](https://vuejs.org/guide/scaling-up/sfc.html) and custom `docs` blocks written in markdown into HTML.
-
 > [!NOTE]
 > This is really just something I made for myself to help document component libraries, so it probably has a lot of limitations and quirks since I've only accounted for how I use it. But maybe it's useful for you - if so - please feel free to make issues and pull requests 😊
+
+`v-mark-docs` uses [markdown-it](https://github.com/markdown-it/markdown-it) and [@mdit-vue/plugin-sfc](https://github.com/mdit-vue/mdit-vue/tree/main/packages/plugin-sfc) to turn markdown files into [**Vue** components](https://vuejs.org/guide/scaling-up/sfc.html) and custom `docs` blocks written in markdown into HTML.
 
 ## Quick start
 
@@ -86,7 +86,7 @@ You can customize the markdown-it instance using the `setup` and `highlight` opt
 
 If you add the `meta` option you get additional markdown syntax available to add documentation for components using [vue-component-meta](https://www.npmjs.com/package/vue-component-meta) - `[?<title>]: <path>.vue`.
 
-This options requires the relevant `tsconfig.json` file for the components, and a `renderer` function. The `renderer` function gets passed a modified version of the result from [vue-component-meta](https://www.npmjs.com/package/vue-component-meta) and the title provided - you can return HTML directly or the markup for a global component (like in the example below).
+This option requires the relevant `tsconfig.json` file for the components, and a `renderer` function. The `renderer` function gets passed a modified version of the result from [vue-component-meta](https://www.npmjs.com/package/vue-component-meta) and the title provided - you can return HTML directly or the markup for a global component (like in the example below).
 
 > [!IMPORTANT]
 > All descriptions in the result (properties with the name `description`) are HTML strings - they have been run through [markdown-it](https://github.com/markdown-it/markdown-it).

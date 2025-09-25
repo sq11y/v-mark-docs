@@ -124,6 +124,12 @@ export default defineConfig({
 
 ## Example
 
+The example only supports dev mode and requires the full project structure as the npm dependency is a relative path.
+
 ```
-cd example && npm run dev
+// Move into the folder
+cd example
+
+// Run dev
+npm run dev
 ```

@@ -90,7 +90,7 @@ If you add the `meta` option you get additional markdown syntax available to add
 This option requires the relevant `tsconfig.json` file for the components, and a `renderer` function. The `renderer` function gets passed a modified version of the result from [vue-component-meta](https://www.npmjs.com/package/vue-component-meta) and the title provided - you can return HTML directly or the markup for a global component (like in the example below).
 
 > [!IMPORTANT]
-> All descriptions in the result (properties with the name `description`) are HTML strings - they have been run through [markdown-it](https://github.com/markdown-it/markdown-it).
+> All descriptions in the result (properties with the name `description`) are HTML strings - as they have been run through [markdown-it](https://github.com/markdown-it/markdown-it).
 
 ```ts
 import { fileURLToPath, URL } from "node:url";
@@ -125,7 +125,7 @@ export default defineConfig({
 
 ## Example
 
-The example only supports dev mode and requires the full project structure as the npm dependency is a relative path.
+The example only supports dev mode and requires the full project structure to run as the npm dependency is a relative path.
 
 ```
 // Build v-mark-docs

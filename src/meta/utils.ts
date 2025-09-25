@@ -4,16 +4,31 @@ import { parse } from "@vue/compiler-sfc";
 
 import type { Tag, Checker, ComponentMeta } from "./types.js";
 
-const getTagText = (tags: Tag[] | undefined, tag: string) => {
-  return tags?.find(({ name }) => name === tag)?.text;
+const filterTags = (tags: Tag[]) => {
+  return tags.filter((t) => !["default", "deprecated"].includes(t.name));
+};
+
+const getTagText = (tags: Tag[], tag: string) => {
+  return tags.find(({ name }) => name === tag)?.text;
 };
 
 const getDescription = (meta: { tags?: Tag[]; description?: string }) => {
-  return meta.description ?? getTagText(meta.tags, "Description") ?? undefined;
+  return meta.description ?? getTagText(meta.tags ?? [], "Description") ?? undefined;
 };
 
-const getDefault = (meta: { tags?: Tag[]; default?: string }) => {
+const getDefault = (meta: { tags: Tag[]; default?: string }) => {
   return meta.default ?? getTagText(meta.tags, "default") ?? undefined;
+};
+
+const getDeprecated = (tags: Tag[]): undefined | string | true => {
+  const tag = tags.find(({ name }) => name === "deprecated");
+
+  if (!tag) {
+    return undefined;
+  }
+
+  /* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */
+  return tag.text || true;
 };
 
 export const getComponentMeta = (
@@ -26,7 +41,9 @@ export const getComponentMeta = (
   const content = readFileSync(url, "utf-8");
 
   /* prettier-ignore */
-  const { descriptor: { customBlocks } } = parse(content, {
+  const {
+    descriptor: { customBlocks },
+  } = parse(content, {
     sourceMap: false,
     ignoreEmpty: true,
   });
@@ -35,47 +52,53 @@ export const getComponentMeta = (
     return i.type === "docs" && i.lang === "md";
   });
 
-  const maybeRender = (content?: string) => {
-    return content ? render(content) : content;
+  const maybeRender = (markdown?: string) => {
+    return markdown ? render(markdown) : markdown;
   };
 
-  const modelValues = meta.props
-    .filter((prop) => !prop.global)
-    .filter((prop) => meta.events.find((event) => event.name === `update:${prop.name}`))
-    .map((prop) => ({
-      name: prop.name,
-      tags: prop.tags,
-      required: prop.required,
-      type: prop.type,
-      description: maybeRender(getDescription(prop)),
-      default: getDefault(prop),
-    }));
+  const nonGlobalProps = meta.props.filter((prop) => !prop.global);
 
-  const props = meta.props
-    .filter((prop) => !prop.global)
-    .filter((prop) => !meta.events.find((event) => event.name === `update:${prop.name}`))
-    .map((prop) => ({
-      name: prop.name,
-      tags: prop.tags,
-      required: prop.required,
-      type: prop.type,
-      description: maybeRender(getDescription(prop)),
-      default: getDefault(prop),
-    }));
+  /* prettier-ignore */
+  const { modelValues: _modelValues = [], props: _props = [] } = Object.groupBy(nonGlobalProps, (p) => {
+    return meta.events.some((event) => event.name === `update:${p.name}`)
+      ? "modelValues"
+      : "props";
+  });
+
+  const modelValues = _modelValues.map((mv) => ({
+    name: mv.name,
+    type: mv.type,
+    tags: filterTags(mv.tags),
+    required: mv.required,
+    default: getDefault(mv),
+    description: maybeRender(getDescription(mv)),
+    deprecated: getDeprecated(mv.tags),
+  }));
+
+  const props = _props.map((p) => ({
+    name: p.name,
+    type: p.type,
+    tags: filterTags(p.tags),
+    required: p.required,
+    default: getDefault(p),
+    description: maybeRender(getDescription(p)),
+    deprecated: getDeprecated(p.tags),
+  }));
 
   const events = meta.events
-    .filter((event) => !modelValues.find((prop) => `update:${prop.name}` === event.name))
-    .map((event) => ({
-      name: event.name,
-      tags: event.tags,
-      type: event.type,
-      description: maybeRender(getDescription(event)),
+    .filter((e) => !modelValues.find((prop) => `update:${prop.name}` === e.name))
+    .map((e) => ({
+      name: e.name,
+      type: e.type,
+      tags: filterTags(e.tags),
+      description: maybeRender(getDescription(e)),
+      deprecated: getDeprecated(e.tags),
     }));
 
-  const slots = meta.slots.map((slot) => ({
-    name: slot.name,
-    description: maybeRender(getDescription(slot)),
-    type: slot.type,
+  const slots = meta.slots.map((s) => ({
+    name: s.name,
+    type: s.type,
+    description: maybeRender(getDescription(s)),
   }));
 
   return {

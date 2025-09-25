@@ -12,6 +12,7 @@
      * The `type` attribute for the button.
      *
      * @default "button"
+     * @deprecated No longer support other options but "Button"
      */
     type?: ButtonHTMLAttributes["type"];
 
@@ -37,7 +38,7 @@
     /**
      * The event triggered on click.
      */
-    click: [event: MouseEvent];
+    click: [event: KeyboardEvent];
   }>();
 
   defineSlots<{

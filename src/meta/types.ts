@@ -17,8 +17,9 @@ export type Renderer = (
 
 export interface ComponentMeta {
   description?: string;
-  props: PropertyMeta[];
+
   modelValues: PropertyMeta[];
+  props: PropertyMeta[];
   events: EventMeta[];
   slots: SlotMeta[];
 }
@@ -30,22 +31,25 @@ export interface Tag {
 
 export interface PropertyMeta {
   name: string;
+  type: string;
   tags: Tag[];
   required: boolean;
-  type: string;
-  description?: string;
   default?: string;
+  description?: string;
+  deprecated?: string | true;
 }
 
 export interface EventMeta {
   name: string;
-  tags: Tag[];
   type?: string;
+  tags: Tag[];
   description?: string;
+  deprecated?: string | true;
 }
 
 export interface SlotMeta {
   name: string;
-  description?: string;
   type: string;
+  description?: string;
+  deprecated?: string | true;
 }

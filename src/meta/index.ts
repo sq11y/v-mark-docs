@@ -5,7 +5,7 @@ import type { Renderer } from "./types.js";
 import type MarkdownIt from "markdown-it";
 
 /**
- * Adds `[?<title>]: <relative-path>.vue` syntax which
+ * Adds `[?<title>]: <path>.vue` syntax which
  * will then get the metadata for that Vue component
  * allowing you to render it.
  *

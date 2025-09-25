@@ -3,8 +3,6 @@ import type { PluginOption } from "vite";
 /**
  * Allows for a custom `<docs />` block,
  * and alternatively exposes it under `Component.__docs`.
- *
- * @param {boolean} expose If the block should be exposed - default `false`
  */
 export default (expose = false): PluginOption => ({
   name: "docs",

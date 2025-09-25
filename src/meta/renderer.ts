@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 import MarkdownIt from "markdown-it";
 
-import { getComponentMeta } from "./utils.js";
+import { generateComponentMeta } from "./meta.js";
 
 import type { MarkdownItEnv, Renderer } from "./types.js";
 import type { RenderRule } from "markdown-it/lib/renderer.mjs";
@@ -28,7 +28,7 @@ export const renderer = (md: MarkdownIt, render: Renderer): RenderRule => {
       return render(undefined, title, env);
     }
 
-    const meta = getComponentMeta(path, env.checker, (description) => {
+    const meta = generateComponentMeta(path, env.checker, (description) => {
       return md.render(description, {
         ...env,
         footnotes: false,

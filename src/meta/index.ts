@@ -5,14 +5,9 @@ import type { Renderer } from "./types.js";
 import type MarkdownIt from "markdown-it";
 
 /**
- * Adds `[?<title>]: <path>.vue` syntax which
- * will then get the metadata for that Vue component
- * allowing you to render it.
- *
- * Comments for props, events and slots will also be run through markdown
- * before the metadata is returned to you.
- *
- * @param md The markdown instance.
+ * Adds `[?<title>]: <path>.vue` syntax top\
+ * get the metadata for the Vue component
+ * and allows for rendering it.
  */
 export const metaPlugin = (render: Renderer) => {
   return (md: MarkdownIt) => {

@@ -8,7 +8,7 @@ export type { ComponentMeta } from "./meta/types.js";
 export type PluginOptions = MarkdownPluginOptions & {
   /**
    * If the docs for a component should
-   * be made available on it as `__docs`.
+   * be made available on it under `Component.__docs`.
    */
   exposeDocs?: boolean;
 };

@@ -4,34 +4,7 @@ import { parse } from "@vue/compiler-sfc";
 
 import type { Tag, Checker, ComponentMeta } from "./types.js";
 
-const filterTags = (tags: Tag[]) => {
-  return tags.filter((t) => !["default", "deprecated"].includes(t.name));
-};
-
-const getTagText = (tags: Tag[], tag: string) => {
-  return tags.find(({ name }) => name === tag)?.text;
-};
-
-const getDescription = (meta: { tags?: Tag[]; description?: string }) => {
-  return meta.description ?? getTagText(meta.tags ?? [], "Description") ?? undefined;
-};
-
-const getDefault = (meta: { tags: Tag[]; default?: string }) => {
-  return meta.default ?? getTagText(meta.tags, "default") ?? undefined;
-};
-
-const getDeprecated = (tags: Tag[]): undefined | string | true => {
-  const tag = tags.find(({ name }) => name === "deprecated");
-
-  if (!tag) {
-    return undefined;
-  }
-
-  /* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */
-  return tag.text || true;
-};
-
-export const getComponentMeta = (
+export const generateComponentMeta = (
   url: string,
   checker: Checker,
   render: (description: string) => string,
@@ -108,4 +81,31 @@ export const getComponentMeta = (
     events,
     slots,
   };
+};
+
+const filterTags = (tags: Tag[]) => {
+  return tags.filter((t) => !["default", "deprecated"].includes(t.name));
+};
+
+const getTagText = (tags: Tag[], tag: string) => {
+  return tags.find(({ name }) => name === tag)?.text;
+};
+
+const getDescription = (meta: { tags?: Tag[]; description?: string }) => {
+  return meta.description ?? getTagText(meta.tags ?? [], "Description") ?? undefined;
+};
+
+const getDefault = (meta: { tags: Tag[]; default?: string }) => {
+  return meta.default ?? getTagText(meta.tags, "default") ?? undefined;
+};
+
+const getDeprecated = (tags: Tag[]): undefined | string | true => {
+  const tag = tags.find(({ name }) => name === "deprecated");
+
+  if (!tag) {
+    return undefined;
+  }
+
+  /* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */
+  return tag.text || true;
 };

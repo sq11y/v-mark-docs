@@ -10,7 +10,7 @@ import markdown from "markdown-it";
 
 import { metaPlugin } from "./meta/index.js";
 
-import type { ComponentMeta, MarkdownItEnv } from "./meta/types.js";
+import type { MarkdownItEnv, Renderer } from "./meta/types.js";
 import type { PluginSimple } from "markdown-it";
 import type { PluginOption } from "vite";
 
@@ -24,11 +24,6 @@ export interface MarkdownPluginOptions {
 
   /**
    * The highlight option for `markdown-it`.
-   *
-   * @param md The markdown instance
-   * @param code The code snippet
-   * @param lang The language for the code snippet
-   * @param attrs The potential attributes provided by `markdown-it-attrs`
    */
   highlight?: (md: MarkdownIt, code: string, lang: string, attrs: string) => string;
 
@@ -42,11 +37,8 @@ export interface MarkdownPluginOptions {
     /**
      * The function used to render the automatic
      * documentation of a vue component.
-     *
-     * @param meta The component meta data (a stripped down result from `vue-component-meta`)
-     * @param title The title specified for the component
      */
-    renderer: (meta?: ComponentMeta, title?: string) => string;
+    renderer: Renderer;
   };
 }
 
@@ -63,13 +55,6 @@ export interface MarkdownPluginOptions {
  * export default defineConfig({
  *   plugins: [vue({ include: [/\.vue$/, /\.md$/] })],
  * })
- * ```
- *
- * Comes with the ability to automatically
- * document SFC components with `vue-component-meta`.
- *
- * ```md
- * [? Component]: ../Component.vue
  * ```
  */
 export default (options?: MarkdownPluginOptions): PluginOption => {
@@ -96,7 +81,7 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
   md.use(componentPlugin);
 
   /* prettier-ignore */
-  md.use(metaPlugin((meta, title) => options?.meta?.renderer(meta, title) ?? ""));
+  md.use(metaPlugin((meta, title, env) => options?.meta?.renderer(meta, title, env) ?? ""));
 
   md.use(anchorPlugin, { permalink: anchorPlugin.permalink.headerLink() });
   md.use(markPlugin);

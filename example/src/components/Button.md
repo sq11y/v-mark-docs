@@ -42,7 +42,7 @@ export default defineConfig({
 
 In this case we're just showing a simple title and `pre` tag with the meta data so the result below isn't beautiful, but you could get creative with it!
 
-[?Button]: ./Button.vue
+[? Button]: ./Button.vue
 
 ## Use components in markdown
 

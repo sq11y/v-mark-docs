@@ -14,7 +14,6 @@ export const rule: RuleBlock = (state, startLine, _, silent) => {
   let pos = start + 2;
 
   while (pos < max) {
-    if (state.src.charAt(pos) === " ") return false;
     if (state.src.charAt(pos) === "]") break;
     pos++;
   }
@@ -25,7 +24,11 @@ export const rule: RuleBlock = (state, startLine, _, silent) => {
 
   pos++;
 
-  const title = state.src.slice(start + 2, pos - 2);
+  const title = state.src.slice(start + 2, pos - 2).trim();
+
+  if (!title) {
+    return false;
+  }
 
   if (silent) {
     return true;

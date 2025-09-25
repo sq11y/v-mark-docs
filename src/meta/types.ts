@@ -11,7 +11,7 @@ export interface MarkdownItEnv {
 
 export type Renderer = (
   meta: ComponentMeta | undefined,
-  title: string | undefined,
+  title: string,
   env: MarkdownItEnv,
 ) => string;
 

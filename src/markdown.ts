@@ -4,8 +4,9 @@ import { createChecker } from "vue-component-meta";
 
 // @ts-expect-error due to missing types
 import markPlugin from "markdown-it-mark";
-import markdown from "markdown-it";
 import attrsPlugin from "markdown-it-attrs";
+import anchorPlugin from "markdown-it-anchor";
+import markdown from "markdown-it";
 
 import { metaPlugin } from "./meta/index.js";
 
@@ -97,6 +98,7 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
   /* prettier-ignore */
   md.use(metaPlugin((meta, title) => options?.meta?.renderer(meta, title) ?? ""));
 
+  md.use(anchorPlugin, { permalink: anchorPlugin.permalink.headerLink() });
   md.use(markPlugin);
   md.use(attrsPlugin);
 

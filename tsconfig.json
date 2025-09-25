@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node24/tsconfig.json",
-  "include": ["src"],
+  "include": ["src", "env.d.ts"],
   "exclude": ["eslint.config.ts"],
 
   "compilerOptions": {

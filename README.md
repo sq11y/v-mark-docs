@@ -28,6 +28,16 @@ export default defineConfig({
 })
 ```
 
+### Add types for `.md` imports in `tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    "types": ["v-mark-docs/types"]
+  }
+}
+```
+
 ## Options
 
 ```ts

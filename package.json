@@ -1,7 +1,7 @@
 {
   "name": "v-mark-docs",
   "description": "Markdown related utilities for documenting Vue components.",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "keywords": [
     "vue",
     "markdown",
@@ -39,6 +39,7 @@
     "markdown-it-attrs": "^4.3.1",
     "markdown-it-mark": "^4.0.0",
     "typescript": "^5.9.2",
+    "v-custom-block": "^1.0.2",
     "vue-component-meta": "^3.0.8",
     "vue-component-type-helpers": "^3.0.8"
   },

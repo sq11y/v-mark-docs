@@ -3,11 +3,15 @@
   "description": "Markdown related utilities for documenting Vue components.",
   "version": "0.0.13",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/sq11y/v-mark-docs"
   },
-  "type": "module",
+  "files": [
+    "dist/",
+    "env.d.ts"
+  ],
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",

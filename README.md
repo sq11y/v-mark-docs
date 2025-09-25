@@ -128,9 +128,12 @@ export default defineConfig({
 The example only supports dev mode and requires the full project structure as the npm dependency is a relative path.
 
 ```
-// Move into the folder
+// Build v-mark-docs
+npm run build
+
+// Move into example folder
 cd example
 
-// Run dev
+// Run the project
 npm run dev
 ```

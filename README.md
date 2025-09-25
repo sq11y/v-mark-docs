@@ -78,6 +78,7 @@ You can customize the markdown-it instance using the `setup` and `highlight` opt
 
 - [markdown-it-mark](https://github.com/markdown-it/markdown-it-mark)
 - [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs)
+- [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor?tab=readme-ov-file#header-link)
 
 #### Documentation for components
 

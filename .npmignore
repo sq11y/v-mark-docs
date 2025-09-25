@@ -10,3 +10,5 @@
 eslint.config.ts
 
 tsconfig.json
+
+.DS_Store

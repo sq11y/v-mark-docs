@@ -1,5 +1,6 @@
 import { componentPlugin } from "@mdit-vue/plugin-component";
 import { sfcPlugin } from "@mdit-vue/plugin-sfc";
+import { frontmatterPlugin } from "@mdit-vue/plugin-frontmatter";
 import { createChecker } from "vue-component-meta";
 
 // @ts-expect-error due to missing types
@@ -77,6 +78,7 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
     });
   })();
 
+  md.use(frontmatterPlugin);
   md.use(sfcPlugin);
   md.use(componentPlugin);
 

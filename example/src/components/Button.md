@@ -1,3 +1,7 @@
+---
+title: "Button"
+---
+
 <script setup>
   import ButtonComponent from './Button.vue';
 </script>

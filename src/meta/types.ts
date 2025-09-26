@@ -7,6 +7,10 @@ export interface MarkdownItEnv {
   sfcBlocks?: MarkdownSfcBlocks;
   path: string;
   checker?: Checker;
+
+  content?: string;
+  excerpt?: string;
+  frontmatter?: Record<string, unknown>;
 }
 
 export type Renderer = (

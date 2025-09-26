@@ -1,7 +1,7 @@
 {
   "name": "v-mark-docs",
   "description": "Markdown related utilities for documenting Vue components.",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "keywords": [
     "vue",
     "markdown",
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@mdit-vue/plugin-component": "^3.0.2",
+    "@mdit-vue/plugin-frontmatter": "^3.0.2",
     "@mdit-vue/plugin-sfc": "^3.0.2",
     "@vue/compiler-sfc": "^3.5.21",
     "markdown-it": "^14.1.0",

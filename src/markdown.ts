@@ -104,7 +104,24 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
           checker,
         };
 
+        code = code.replaceAll(/{{ ?\$frontmatter\.([A-z]*) ?}}/g, "$frontmatter.$1");
+
         const html = md.render(code, env);
+
+        const frontMatter = env.frontmatter ?? ({} as Record<string, string | number>);
+
+        const replaceFrontMatterVariables = (text: string) => {
+          let copy = text;
+
+          for (const property in frontMatter) {
+            const value = frontMatter[property] as string | number | undefined;
+
+            const formattedValue = typeof value === "number" ? value.toString() : (value ?? "");
+            copy = copy.replaceAll(`$frontmatter.${property}`, formattedValue);
+          }
+
+          return copy;
+        };
 
         /**
          * If it's a markdown block, return the
@@ -112,7 +129,7 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
          * a single file component.
          */
         if (id.endsWith("lang.md")) {
-          return html;
+          return replaceFrontMatterVariables(html);
         } else {
           const template = env.sfcBlocks?.template?.content ?? "";
 
@@ -120,7 +137,7 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
 
           const styles = env.sfcBlocks?.styles.map((s) => s.content).join("\n\n") ?? "";
 
-          return `${template}\n\n${script}\n\n${styles}`;
+          return `${replaceFrontMatterVariables(template)}\n\n${script}\n\n${styles}`;
         }
       }
     },

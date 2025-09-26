@@ -1,14 +1,15 @@
 ---
-title: "Button"
+title: "Document"
+description: "An example show-casing v-mark-docs."
 ---
 
 <script setup>
   import ButtonComponent from './Button.vue';
 </script>
 
-# Documentation example
+# {{ $frontmatter.title }}
 
-An example show-casing `v-mark-docs`.
+{{ $frontmatter.description}}
 
 There are some markdown plugins enabled by default.
 

@@ -9,13 +9,16 @@ export default defineConfig({
   plugins: [
     vue({ include: [/\.vue$/, /\.md$/] }),
 
+    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+    /* @ts-ignore due to the error only existing in this package due to nested folder structure  */
     markdown({
       meta: {
-        tsconfigPath: fileURLToPath(new URL("./tsconfig.app.json", import.meta.url)),
+        tsconfig: fileURLToPath(new URL("./tsconfig.app.json", import.meta.url)),
 
         renderer: (meta, title) => `
-          <h2>${title ?? "Untitled"}</h2>
+          <h2>${title}</h2>
           <pre><code>${JSON.stringify(meta, null, 2)}</code></pre>
+          <pre><code>${meta.documentation ?? ""}</code></pre>
         `,
       },
     }),

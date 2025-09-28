@@ -1,12 +1,11 @@
 {
   "name": "v-mark-docs",
   "description": "Markdown related utilities for documenting Vue components.",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "keywords": [
     "vue",
     "markdown",
-    "documentation",
-    "documentation-tool"
+    "documentation"
   ],
   "license": "MIT",
   "type": "module",
@@ -30,19 +29,20 @@
     "lint": "eslint ./src --fix",
     "format": "prettier --write ./src"
   },
+  "peerDependencies": {
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7"
+  },
   "dependencies": {
     "@mdit-vue/plugin-component": "^3.0.2",
     "@mdit-vue/plugin-frontmatter": "^3.0.2",
     "@mdit-vue/plugin-sfc": "^3.0.2",
-    "@vue/compiler-sfc": "^3.5.21",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-attrs": "^4.3.1",
     "markdown-it-mark": "^4.0.0",
-    "typescript": "^5.9.2",
-    "v-custom-block": "^1.0.2",
-    "vue-component-meta": "^3.0.8",
-    "vue-component-type-helpers": "^3.0.8"
+    "markdown-it-vue-meta": "^0.0.1",
+    "v-custom-block": "^1.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
@@ -53,7 +53,6 @@
     "eslint": "^9.36.0",
     "jiti": "^2.6.0",
     "prettier": "^3.6.2",
-    "typescript-eslint": "^8.44.1",
-    "vite": "^7.1.7"
+    "typescript-eslint": "^8.44.1"
   }
 }

@@ -1,17 +1,16 @@
 import { componentPlugin } from "@mdit-vue/plugin-component";
-import { sfcPlugin } from "@mdit-vue/plugin-sfc";
+import { MarkdownSfcBlocks, sfcPlugin } from "@mdit-vue/plugin-sfc";
 import { frontmatterPlugin } from "@mdit-vue/plugin-frontmatter";
-import { createChecker } from "vue-component-meta";
 
 // @ts-expect-error due to missing types
 import markPlugin from "markdown-it-mark";
 import attrsPlugin from "markdown-it-attrs";
 import anchorPlugin from "markdown-it-anchor";
+import metaPlugin from "markdown-it-vue-meta";
 import markdown from "markdown-it";
 
-import { metaPlugin } from "./meta/index.js";
+import type { PluginOptions, MarkdownItEnv } from "markdown-it-vue-meta";
 
-import type { MarkdownItEnv, Renderer } from "./meta/types.js";
 import type { PluginSimple } from "markdown-it";
 import type { PluginOption } from "vite";
 
@@ -28,19 +27,14 @@ export interface MarkdownPluginOptions {
    */
   highlight?: (md: MarkdownIt, code: string, lang: string, attrs: string) => string;
 
-  meta?: {
-    /**
-     * The path to the tsconfig that should be used for
-     * the automatic vue component documentation.
-     */
-    tsconfigPath: string;
+  meta?: PluginOptions;
+}
 
-    /**
-     * The function used to render the automatic
-     * documentation of a vue component.
-     */
-    renderer: Renderer;
-  };
+interface FullMarkdownItEnv extends MarkdownItEnv {
+  sfcBlocks?: MarkdownSfcBlocks;
+  content?: string;
+  excerpt?: string;
+  frontmatter?: Record<string, unknown>;
 }
 
 /**
@@ -67,23 +61,10 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
     },
   });
 
-  const checker = (() => {
-    if (!options?.meta) {
-      return;
-    }
-
-    return createChecker(options.meta.tsconfigPath, {
-      noDeclarations: true,
-      rawType: false,
-    });
-  })();
-
   md.use(frontmatterPlugin);
   md.use(sfcPlugin);
   md.use(componentPlugin);
-
-  /* prettier-ignore */
-  md.use(metaPlugin((meta, title, env) => options?.meta?.renderer(meta, title, env) ?? ""));
+  md.use(metaPlugin, options?.meta);
 
   md.use(anchorPlugin, { permalink: anchorPlugin.permalink.headerLink() });
   md.use(markPlugin);
@@ -99,9 +80,8 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
 
     transform(code, id) {
       if (id.endsWith(".md")) {
-        const env: MarkdownItEnv = {
+        const env: FullMarkdownItEnv = {
           path: id.replace(/[?#].*$/, ""),
-          checker,
         };
 
         code = code.replaceAll(/{{ ?\$frontmatter\.([A-z]*) ?}}/g, "$frontmatter.$1");

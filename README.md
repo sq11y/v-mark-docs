@@ -41,7 +41,15 @@ export default defineConfig({
 ## Options
 
 ```ts
-export interface PluginOptions {
+export interface MarkdownDocumentationPluginOptions {
+  /**
+   * The glob for files to include in
+   * router export.
+   *
+   * The router import will return an empty array if this is not set.
+   */
+  include?: string;
+
   /**
    * If the docs for a component should
    * be made available on it under `Component.__docs`.
@@ -83,6 +91,35 @@ title: "Document"
 ---
 
 # {{ $frontmatter.title }}
+```
+
+### Routes
+
+You can import an array of all markdown files - their absolute paths and their front matter. _Which files should be included can be modified using the `include` option._
+
+```ts
+import { routes } from "typeach:routes";
+
+/**
+ * @example result
+ *
+ * [{
+ *   path: "/home/YourUsername/Documents/project/docs/Example.md",
+ *   frontMatter: {}
+ * }]
+ */
+```
+
+#### vue-router
+
+Assuming every markdown has a slug and a title in it's frontmatter - you could do something like this to create routes for the different documentation files:
+
+```ts
+routes.map((route) => ({
+  path: route.frontMatter!.slug,
+  name: route.frontMatter!.title.toLowerCase().replaceAll(" ", "-"),
+  component: () => import(/* @vite-ignore */ route.absolutePath),
+}));
 ```
 
 #### `markdown-it-vue-meta`

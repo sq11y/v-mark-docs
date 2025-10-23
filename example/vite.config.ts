@@ -12,13 +12,14 @@ export default defineConfig({
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     /* @ts-ignore due to the error only existing in this package due to nested folder structure  */
     markdown({
+      include: "src/components/**/*.md",
+
       meta: {
         tsconfig: fileURLToPath(new URL("./tsconfig.app.json", import.meta.url)),
 
         renderer: (meta, title) => `
-          <h2>${title}</h2>
+          <h3>${title}</h3>
           <pre><code>${JSON.stringify(meta, null, 2)}</code></pre>
-          <pre><code>${meta.documentation ?? ""}</code></pre>
         `,
       },
     }),

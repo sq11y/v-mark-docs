@@ -1,5 +1,5 @@
 <template>
-  <button ref="element" :type="type" :disabled="disabled" @keydown="emit('click', $event)">
+  <button ref="element" type="button" :disabled="disabled" @keydown="emit('click', $event)">
     <slot />
   </button>
 </template>

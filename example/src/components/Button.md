@@ -1,6 +1,7 @@
 ---
-title: "Document"
-description: "An example show-casing v-mark-docs."
+title: "Button"
+description: "An example show-casing documenting components with v-mark-docs."
+slug: "/button"
 ---
 
 <script setup>
@@ -9,15 +10,9 @@ description: "An example show-casing v-mark-docs."
 
 # {{ $frontmatter.title }}
 
-{{ $frontmatter.description}}
+_{{ $frontmatter.description}}_
 
-There are some markdown plugins enabled by default.
-
-- ==Marking text== with [markdown-it-mark](https://github.com/markdown-it/markdown-it-mark). E.g. `==Marking text==`.
-- Adding custom attributes with [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs). I used that to add the `id` attrs-example to this paragraph. E.g. `{#attrs-example}`. {#attrs-example}
-- Headings are turned into links using [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor?tab=readme-ov-file#header-link).
-
-And an extra markdown plugin you can enable through the options, documenting components with e.g. `[?Button]: ./Button.vue`.
+Alongside the default plugins - there is an extra markdown plugin you can enable through the options, documenting components with e.g. `[?Button]: ./Button.vue`.
 
 ```ts
 import { fileURLToPath, URL } from "node:url";
@@ -36,7 +31,7 @@ export default defineConfig({
         tsconfigPath: fileURLToPath(new URL("./tsconfig.app.json", import.meta.url)),
 
         renderer: (meta, title) => `
-          <h2>${title ?? "Untitled"}</h2>
+          <h3>${title ?? "Untitled"}</h3>
           <pre><code>${JSON.stringify(meta, null, 2)}</code></pre>
         `,
       },
@@ -45,12 +40,16 @@ export default defineConfig({
 });
 ```
 
-In this case we're just showing a simple title and `pre` tag with the meta data so the result below isn't beautiful, but you could get creative with it!
+## Example
 
-[? Button]: ./Button.vue
-
-## Use components in markdown
+## Use the component in markdown
 
 <ButtonComponent>
   This example button does nothing
 </ButtonComponent>
+
+## Document the API
+
+In this example we're showing a H3 title and `pre` tag with the meta data so the result below isn't beautiful, but you could get creative with the display!
+
+[? Button API]: ./Button.vue

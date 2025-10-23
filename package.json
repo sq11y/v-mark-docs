@@ -1,7 +1,7 @@
 {
   "name": "v-mark-docs",
   "description": "Markdown related utilities for documenting Vue components.",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "keywords": [
     "vue",
     "markdown",
@@ -37,6 +37,9 @@
     "@mdit-vue/plugin-component": "^3.0.2",
     "@mdit-vue/plugin-frontmatter": "^3.0.2",
     "@mdit-vue/plugin-sfc": "^3.0.2",
+    "fast-glob": "^3.3.3",
+    "find-up": "^8.0.0",
+    "front-matter": "^4.0.2",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-attrs": "^4.3.1",

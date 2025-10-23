@@ -1,12 +1,28 @@
 <template>
-  <ButtonDocumentation />
+  <nav>
+    <ul>
+      <template v-for="route of routes" :key="route.path">
+        <li>
+          <router-link v-if="route.frontMatter" :to="route.frontMatter.slug">
+            {{ route.frontMatter.title }}
+          </router-link>
+        </li>
+      </template>
+    </ul>
+  </nav>
+
+  <RouterView />
 </template>
 
 <script lang="ts" setup>
-  import ButtonDocumentation from "./components/Button.md";
+  import { routes } from "typeach:routes";
 </script>
 
 <style>
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     margin-block: 4rem;
 
@@ -36,9 +52,14 @@
     font-size: 0.9rem;
   }
 
+  * {
+    margin-block-start: 0.5em;
+  }
+
   h1,
   h2 {
     line-height: 1.2;
+    margin-block-start: 1.25em;
   }
 
   code:not(pre code) {

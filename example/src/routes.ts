@@ -1,4 +1,4 @@
-import { routes } from "typeach:routes";
+import { routes } from "v-mark-docs:routes";
 import { createMemoryHistory, createRouter } from "vue-router";
 
 export const router = createRouter({

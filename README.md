@@ -98,7 +98,7 @@ title: "Document"
 You can import an array of all markdown files - their absolute paths and their front matter. _Which files should be included can be modified using the `include` option._
 
 ```ts
-import { routes } from "typeach:routes";
+import { routes } from "v-mark-docs:routes";
 
 /**
  * @example result

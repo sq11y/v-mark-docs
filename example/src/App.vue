@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { routes } from "typeach:routes";
+  import { routes } from "v-mark-docs:routes";
 </script>
 
 <style>

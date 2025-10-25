@@ -84,17 +84,17 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
           path: id.replace(/[?#].*$/, ""),
         };
 
-        code = code.replaceAll(/{{ ?\$frontmatter\.([A-z]*) ?}}/g, "$frontmatter.$1");
-
         const html = md.render(code, env);
 
-        const frontMatter = env.frontmatter ?? ({} as Record<string, string | number>);
-
         const replaceFrontMatterVariables = (text: string) => {
-          let copy = text;
+          if (!env.frontmatter) {
+            return text;
+          }
 
-          for (const property in frontMatter) {
-            const value = frontMatter[property] as string | number | undefined;
+          let copy = text.replaceAll(/{{ ?\$frontmatter\.([A-z]*) ?}}/g, "$frontmatter.$1");
+
+          for (const property in env.frontmatter) {
+            const value = env.frontmatter[property] as string | number | undefined;
 
             const formattedValue = typeof value === "number" ? value.toString() : (value ?? "");
             copy = copy.replaceAll(`$frontmatter.${property}`, formattedValue);
@@ -113,11 +113,15 @@ export default (options?: MarkdownPluginOptions): PluginOption => {
         } else {
           const template = env.sfcBlocks?.template?.content ?? "";
 
-          const script = env.sfcBlocks?.scriptSetup?.content ?? "";
+          let script = env.sfcBlocks?.scriptSetup?.contentStripped ?? "";
+
+          if (env.frontmatter) {
+            script += `\nconst $frontmatter = ${JSON.stringify(env.frontmatter)};`;
+          }
 
           const styles = env.sfcBlocks?.styles.map((s) => s.content).join("\n\n") ?? "";
 
-          return `${replaceFrontMatterVariables(template)}\n\n${script}\n\n${styles}`;
+          return `${template}\n\n<script setup>${script}</script>\n\n${styles}`;
         }
       }
     },

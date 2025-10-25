@@ -83,14 +83,19 @@ You can customize the markdown-it instance using the `setup` and `highlight` opt
 
 ### Frontmatter
 
-You can acccess frontmatter data using the `$frontmatter` variable. However this is only avaialble in the template with the double squrrly brackets for now.
+You can acccess frontmatter data using the `$frontmatter` variable.
+
+Other markdown-it packages do not have access to this variable - so for example if using a `$frontmatter` variable inside a title - you should specify the id for the title so that [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor) doesn't end up with weird looking links - and [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs) does not have access to the variables either.
 
 ```md
 ---
-title: "Document"
+title: "Title"
+description: "Description"
 ---
 
-# {{ $frontmatter.title }}
+# {{ $frontmatter.title }} {#title}
+
+{{ $frontmatter.description }}
 ```
 
 ### Routes

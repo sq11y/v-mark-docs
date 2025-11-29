@@ -11,8 +11,7 @@ slug: "/example"
 
 # {{ fm.title }}
 
-There are some markdown plugins enabled by default.
-
-- ==Marking text== with [markdown-it-mark](https://github.com/markdown-it/markdown-it-mark). E.g. `==Marking text==`.
-- Adding custom attributes with [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs). I used that to add the `id` attrs-example to this paragraph. E.g. `{#attrs-example}`. {#attrs-example}
-- Headings are turned into links using [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor?tab=readme-ov-file#header-link).
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, harum itaque consequatur vel
+voluptatem vero labore aliquam fuga veritatis, voluptatum architecto. Obcaecati, vitae delectus
+aperiam deleniti quod, ducimus vero quas, adipisci molestias placeat neque? Sapiente sint nam
+tempora commodi! Adipisci iure unde alias ab quasi maxime enim porro cum vero.

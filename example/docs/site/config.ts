@@ -1,13 +1,10 @@
 import type { Config } from "v-mark-docs";
 
 export default {
-  metaRenderer() {
+  metaRenderer(meta, title) {
     return `
-          <details>
-            <summary> i am working</summary>
-
-            an d i am not!
-          </details>
-        `;
+      <h3>${title}</h3>
+      <pre><code>${JSON.stringify(meta, null, 2)}</code></pre>
+    `;
   },
 } satisfies Config;

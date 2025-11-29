@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1>Example app</h1>
+    <h1>v-mark-docs</h1>
 
     <MyButton>A button</MyButton>
   </main>

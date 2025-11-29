@@ -19,6 +19,8 @@ export const dist404Html = join(dist, "404.html");
 
 export const indexTs = (cwd: string) => join(cwd, "site", "index.ts");
 
+export const configTs = (cwd: string) => join(cwd, "site", "config.ts");
+
 export const client = join(dirname, "client");
 
 export const createApp = join(client, "entry.js");

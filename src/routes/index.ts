@@ -53,7 +53,7 @@ const plugin = (pages: Page[]): PluginOption => {
 };
 
 export const routerPlugin = (cwd: string): PluginOption => {
-  const markdownFiles = fg.globSync(["(docs|src)/**/*.md"], { absolute: true, cwd });
+  const markdownFiles = fg.globSync(["(docs|src|packages)/**/*.md"], { absolute: true, cwd });
 
   const pages = markdownFiles
     .map((path) => ({

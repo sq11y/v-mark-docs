@@ -1,15 +1,11 @@
-import { readFileSync } from "node:fs";
-
 import { type Plugin, type ResolvedConfig } from "vite";
 
 import { createApp, indexTs, readIndexHtml } from "../files.js";
 
-export const clientPlugin = (config: ResolvedConfig): Plugin => {
-  const moduleId = "v-mark-docs:app";
+export default (config: ResolvedConfig): Plugin => {
+  const moduleId = "v-mark-docs:config";
 
-  const resolvedModuleId = "\0" + moduleId;
-
-  const html = readIndexHtml("./index.html").replace("__ENTRY__", indexTs(config.root));
+  const html = readIndexHtml("./index.html").replace("__ENTRY__", createApp);
 
   return {
     name: "custom-index-file",
@@ -28,15 +24,9 @@ export const clientPlugin = (config: ResolvedConfig): Plugin => {
       });
     },
 
-    resolveId(id) {
+    async resolveId(id, importer) {
       if (id === moduleId) {
-        return resolvedModuleId;
-      }
-    },
-
-    load(id) {
-      if (id === resolvedModuleId) {
-        return readFileSync(createApp, "utf-8");
+        return this.resolve(indexTs(config.root).replace(".ts", ""), importer);
       }
     },
   };

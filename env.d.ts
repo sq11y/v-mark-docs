@@ -6,23 +6,63 @@ declare module "*.md" {
   export default markdown;
 }
 
+declare module "v-mark-docs" {
+  import { Component } from "vue";
+
+  type Setup = {
+    /**
+     * The main component for the site.
+     */
+    Site: Component;
+
+    /**
+     * Additional setup for the app.
+     */
+    setup?(app: App): void;
+  };
+
+  type Config = {
+    /**
+     * Additional markdown-it setup.
+     */
+    setup?: PluginSimple;
+
+    /**
+     * The highlight option for `markdown-it`.
+     */
+    highlight?: (md: MarkdownIt, code: string, lang: string, attrs: string) => string;
+
+    /**
+     * The renderer option for `markdown-it-vue-meta`.
+     */
+    metaRenderer?: PluginOptions["renderer"];
+  };
+
+  export { Setup, Config };
+}
+
 declare module "v-mark-docs:routes" {
   import { RouteRecordRaw } from "vue-router";
 
   const routes: (Omit<RouteRecordRaw, "meta"> & {
     meta: Record<string, unknown> & {
       title: string;
-      slug: title;
+      slug: string;
     };
   })[];
 
-  export { routes };
+  export default routes;
 }
 
-declare module "v-mark-docs:app" {
-  import { Component, App } from "vue";
+declare module "v-mark-docs:config" {
+  import { Component } from "vue";
 
-  const createApp: (site: Component, callback: (app: App<Element>) => void) => void;
+  type Config = {
+    Site: Component;
+    setup?(app: App): void;
+  };
 
-  export { createApp };
+  const config: Config;
+
+  export default config;
 }

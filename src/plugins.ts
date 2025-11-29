@@ -1,29 +1,17 @@
-import { join } from "node:path";
-
 import type { ResolvedConfig } from "vite";
 
 import customBlockPlugin from "v-custom-block";
+import clientPlugin from "./client/client.js";
+import routesPlugin from "./routes/routes.js";
+import markdownPlugin from "./markdown/markdown.js";
 
-import { routerPlugin } from "./routes/index.js";
-import { clientPlugin } from "./client/index.js";
-import { markdownPlugin } from "./markdown/index.js";
-
-import { root } from "./files.js";
+import { indexTs, root } from "./files.js";
 
 export const plugins = async (resolvedConfig: ResolvedConfig) => [
   clientPlugin(resolvedConfig),
-  routerPlugin(root),
-
-  markdownPlugin({
-    meta: {
-      tsconfig: join(root, "tsconfig.app.json"),
-
-      renderer: (meta, title) => `
-          <h3>${title}</h3>
-          <pre><code>${JSON.stringify(meta, null, 2)}</code></pre>
-        `,
-    },
-  }),
-
+  routesPlugin(root),
+  markdownPlugin(
+    (await import(indexTs(resolvedConfig.root).replace("index.ts", "config.ts"))).default,
+  ),
   customBlockPlugin("docs"),
 ];

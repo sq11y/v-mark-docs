@@ -1,6 +1,6 @@
 import { loadConfigFromFile, type UserConfig } from "vite";
 
-import { client, dist, docs, indexTs, root } from "./files.js";
+import { root, client, dist, createApp, docs } from "./files.js";
 
 export const getUserViteConfig = async (command: "dev" | "build" | "preview") => {
   const userConfigFile = await loadConfigFromFile({
@@ -30,7 +30,7 @@ export const getViteConfig = (): UserConfig => ({
     outDir: dist,
 
     rollupOptions: {
-      input: indexTs(docs),
+      input: createApp,
 
       output: {
         entryFileNames: () => "assets/[name].js",

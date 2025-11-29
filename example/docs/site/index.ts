@@ -1,9 +1,7 @@
-import { createApp } from "v-mark-docs:app";
-
-import { router } from "./router/router";
-
+import type { Setup } from "v-mark-docs";
 import Site from "./Site.vue";
+import "./style.css";
 
-createApp(Site, (app) => {
-  app.use(router);
-});
+export default {
+  Site,
+} satisfies Setup;

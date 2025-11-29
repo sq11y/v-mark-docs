@@ -10,10 +10,26 @@ type Page = {
   frontmatter: FrontMatterResult<{ slug: string; title: string }>["attributes"];
 };
 
-const plugin = (pages: Page[]): PluginOption => {
+export default (cwd: string): PluginOption => {
   const moduleId = "v-mark-docs:routes";
 
   const resolvedModuleId = "\0" + moduleId;
+
+  const markdownFiles = fg.globSync(["(docs|src|packages)/**/*.md"], { absolute: true, cwd });
+
+  const pages = markdownFiles
+    .map((path) => ({
+      path,
+      content: readFileSync(path, "utf-8"),
+    }))
+    .map((file) => ({
+      path: file.path,
+      frontmatter: (fm(file.content).attributes ?? {}) as Record<string, unknown>,
+    }))
+    .filter((file): file is Page => {
+      const { title, slug } = file.frontmatter;
+      return typeof title === "string" && typeof slug === "string";
+    });
 
   return {
     name: "v-mark-docs:routes",
@@ -44,30 +60,10 @@ const plugin = (pages: Page[]): PluginOption => {
           }`.trim(),
         );
 
-        const exports = `export const routes = [${stringRoutes.join(",\n")}]`;
+        const exports = `export default [${stringRoutes.join(",\n")}]`;
 
         return `${imports}\n${exports}`;
       }
     },
   };
-};
-
-export const routerPlugin = (cwd: string): PluginOption => {
-  const markdownFiles = fg.globSync(["(docs|src|packages)/**/*.md"], { absolute: true, cwd });
-
-  const pages = markdownFiles
-    .map((path) => ({
-      path,
-      content: readFileSync(path, "utf-8"),
-    }))
-    .map((file) => ({
-      path: file.path,
-      frontmatter: (fm(file.content).attributes ?? {}) as Record<string, unknown>,
-    }))
-    .filter((file): file is Page => {
-      const { title, slug } = file.frontmatter;
-      return typeof title === "string" && typeof slug === "string";
-    });
-
-  return plugin(pages);
 };

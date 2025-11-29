@@ -16,6 +16,8 @@ import type { PluginOption } from "vite";
 
 import type MarkdownIt from "markdown-it";
 
+import { tsconfig } from "../files.js";
+
 export interface MarkdownPluginOptions {
   /**
    * Additional markdown-it setup.
@@ -27,10 +29,13 @@ export interface MarkdownPluginOptions {
    */
   highlight?: (md: MarkdownIt, code: string, lang: string, attrs: string) => string;
 
-  meta?: PluginOptions;
+  /**
+   * The renderer option for `markdown-it-vue-meta`.
+   */
+  metaRenderer?: PluginOptions["renderer"];
 }
 
-interface FullMarkdownItEnv extends MarkdownItEnv {
+interface _MarkdownItEnv extends MarkdownItEnv {
   sfcBlocks?: MarkdownSfcBlocks;
   content?: string;
   excerpt?: string;
@@ -42,7 +47,7 @@ interface FullMarkdownItEnv extends MarkdownItEnv {
  * and turns `.md` files into single file vue components
  * - using `markdown-it`.
  */
-export const markdownPlugin = (options?: MarkdownPluginOptions): PluginOption => {
+export default (options?: MarkdownPluginOptions): PluginOption => {
   const md = markdown({
     html: true,
 
@@ -54,7 +59,10 @@ export const markdownPlugin = (options?: MarkdownPluginOptions): PluginOption =>
   md.use(frontmatterPlugin);
   md.use(sfcPlugin);
   md.use(componentPlugin);
-  md.use(metaPlugin, options?.meta);
+
+  if (options?.metaRenderer) {
+    md.use(metaPlugin, { renderer: options?.metaRenderer, tsconfig });
+  }
 
   md.use(anchorPlugin, { permalink: anchorPlugin.permalink.headerLink() });
   md.use(markPlugin);
@@ -70,7 +78,7 @@ export const markdownPlugin = (options?: MarkdownPluginOptions): PluginOption =>
 
     transform(code, id) {
       if (id.endsWith(".md")) {
-        const env: FullMarkdownItEnv = {
+        const env: _MarkdownItEnv = {
           path: id.replace(/[?#].*$/, ""),
         };
 

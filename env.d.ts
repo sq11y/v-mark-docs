@@ -7,6 +7,7 @@ declare module "*.md" {
 }
 
 declare module "v-mark-docs" {
+  import { PluginSimple } from "markdown-it";
   import { PluginOptions } from "markdown-it-vue-meta";
   import { Component } from "vue";
 

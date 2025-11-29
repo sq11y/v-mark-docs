@@ -11,6 +11,21 @@
 
 ```
 npm i v-mark-docs
+
+// install expected peer dependencies
+npm i typescript vite vue vue-router v-custom-block
+```
+
+### Add scripts to `package.json`
+
+```json
+{
+  "scripts": {
+    "docs": "v-mark-docs",
+    "docs:build": "v-mark-docs build",
+    "docs:preview": "v-mark-docs preview"
+  }
+}
 ```
 
 ### Add to `vite.config.ts`
@@ -32,7 +47,7 @@ export default defineConfig({
 
 ### Copy `docs` folder from the example
 
-Copy the `docs` folder from the example project! Every markdown file you want to include as a route requires a `title` and `slug` property in it's [frontmatter](#frontmatter).
+Copy the `docs` folder from the example project for the quickest start. Every markdown file you want to include as a route requires a `title` and `slug` property in it's [frontmatter](#frontmatter).
 
 ### Plugins
 

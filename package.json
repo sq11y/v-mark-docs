@@ -1,7 +1,7 @@
 {
   "name": "v-mark-docs",
   "description": "Markdown related utilities for documenting Vue components.",
-  "version": "0.2.23",
+  "version": "0.3.0",
   "keywords": [
     "vue",
     "markdown",
@@ -13,32 +13,32 @@
     "type": "git",
     "url": "https://github.com/sq11y/v-mark-docs"
   },
+  "bin": {
+    "v-mark-docs": "./index.js"
+  },
+  "exports": {
+    "./types": "./env.d.ts"
+  },
   "files": [
     "dist/",
     "env.d.ts"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./types": "./env.d.ts"
-  },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run copy-assets",
+    "copy-assets": "copyfiles --up 1 \"src/**/*.{html,ico}\" dist/",
     "lint": "eslint ./src --fix",
     "format": "prettier --write ./src"
   },
   "peerDependencies": {
     "typescript": "^5.9.3",
-    "vite": "^7.2.2"
+    "vite": "^7.2.2",
+    "vue": "^3.5.22"
   },
   "dependencies": {
     "@mdit-vue/plugin-component": "^3.0.2",
     "@mdit-vue/plugin-frontmatter": "^3.0.2",
     "@mdit-vue/plugin-sfc": "^3.0.2",
     "fast-glob": "^3.3.3",
-    "find-up": "^8.0.0",
     "front-matter": "^4.0.2",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
@@ -53,6 +53,7 @@
     "@types/markdown-it": "^14.1.2",
     "@types/markdown-it-attrs": "^4.1.3",
     "@types/node": "^24.10.1",
+    "copyfiles": "^2.4.1",
     "eslint": "^9.39.1",
     "jiti": "^2.6.1",
     "prettier": "^3.6.2",

@@ -1,5 +1,5 @@
 import { componentPlugin } from "@mdit-vue/plugin-component";
-import { MarkdownSfcBlocks, sfcPlugin } from "@mdit-vue/plugin-sfc";
+import { sfcPlugin, type MarkdownSfcBlocks } from "@mdit-vue/plugin-sfc";
 import { frontmatterPlugin } from "@mdit-vue/plugin-frontmatter";
 
 // @ts-expect-error due to missing types
@@ -52,7 +52,7 @@ interface FullMarkdownItEnv extends MarkdownItEnv {
  * })
  * ```
  */
-export default (options?: MarkdownPluginOptions): PluginOption => {
+export const markdownPlugin = (options?: MarkdownPluginOptions): PluginOption => {
   const md = markdown({
     html: true,
 

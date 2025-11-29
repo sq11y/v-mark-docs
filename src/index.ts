@@ -1,31 +1,43 @@
-import type { PluginOption } from "vite";
-import { findUpSync } from "find-up";
-import customBlock from "v-custom-block";
+import { writeFile } from "node:fs/promises";
 
-import markdown, { MarkdownPluginOptions } from "./markdown.js";
-import routes from "./routes.js";
-import { dirname } from "path";
+import { mergeConfig, resolveConfig, createServer, build, preview } from "vite";
 
-export type { MarkdownPluginOptions } from "./markdown.js";
+import { getUserViteConfig, getViteConfig } from "./config.js";
 
-export interface MarkdownDocumentationPluginOptions extends MarkdownPluginOptions {
-  /**
-   * The glob for files to include in
-   * router export.
-   *
-   * The router import will return an empty array if this is not set.
-   */
-  include?: string;
-}
+import { plugins } from "./plugins.js";
+import { distIndexHtml, dist404Html, readIndexHtml } from "./files.js";
 
-const packageLocation = findUpSync("package.json");
+const [_, __, command = "dev"] = process.argv;
 
-if (!packageLocation) {
+if (command !== "dev" && command !== "build" && command !== "preview") {
   throw new Error();
 }
 
-export default (options: MarkdownDocumentationPluginOptions): PluginOption[] => [
-  routes(dirname(packageLocation), options.include),
-  markdown(options),
-  customBlock("docs"),
-];
+const config = mergeConfig(await getUserViteConfig(command), getViteConfig());
+
+const resolvedConfig = await resolveConfig(config, "serve");
+
+const configWithPlugins = mergeConfig(config, { plugins: await plugins(resolvedConfig) });
+
+if (command === "dev") {
+  const server = await createServer(configWithPlugins);
+
+  await server.listen();
+
+  server.printUrls();
+  server.bindCLIShortcuts({ print: true });
+} else {
+  await build(configWithPlugins);
+
+  const html = readIndexHtml("./index.build.html");
+
+  await writeFile(distIndexHtml, html);
+  await writeFile(dist404Html, html);
+
+  if (command === "preview") {
+    const previewServer = await preview(configWithPlugins);
+
+    previewServer.printUrls();
+    previewServer.bindCLIShortcuts({ print: true });
+  }
+}

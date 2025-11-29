@@ -4,7 +4,7 @@ import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig(
-  globalIgnores(["**/dist/**", "eslint.config.ts"]),
+  globalIgnores(["**/dist/**", "eslint.config.ts", "index.js"]),
 
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
@@ -29,6 +29,18 @@ export default defineConfig(
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-misused-promises": "off",
+
+      "no-unused-vars": [
+        "error",
+        "error",
+        {
+          args: "after-used",
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
     },
   },
 );

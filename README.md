@@ -49,19 +49,11 @@ export default defineConfig({
 
 Copy the `docs` folder from the example project for the quickest start. Every markdown file you want to include as a route requires a `title` and `slug` property in it's [frontmatter](#frontmatter).
 
-### Plugins
-
-You can customize the markdown-it instance using the `setup` and `highlight` options - but there are some plugins added by default:
-
-- [markdown-it-mark](https://github.com/markdown-it/markdown-it-mark)
-- [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs)
-- [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor?tab=readme-ov-file#header-link)
-
 ### Frontmatter
 
 You can then access the `frontmatter` through the injected value.
 
-Other `markdown-it` packages **do not have access to this variable** - so for example if using a `$frontmatter` variable inside a heading tag - you should specify the id for the title so that [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor) doesn't end up with weird looking links.
+Other `markdown-it` packages **do not have access to this variable** - so for example if using a `fm` variable inside a heading tag - you should specify the id for the title so that [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor) doesn't end up with weird looking links.
 
 ```md
 ---
@@ -80,6 +72,15 @@ description: "Description"
 
 {{ fm.description }}
 ```
+
+## Markdown plugins
+
+You can customize the markdown-it instance using the `setup` and `highlight` options inside `config.ts` - but there are some plugins added by default:
+
+- [markdown-it-mark](https://github.com/markdown-it/markdown-it-mark)
+- [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs)
+- [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor)
+- [markdown-it-vue-meta](https://github.com/sq11y/markdown-it-vue-meta) - you can modify it's output with the `metaRenderer` option.
 
 ## Run the example
 

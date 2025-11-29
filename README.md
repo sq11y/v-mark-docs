@@ -1,5 +1,5 @@
 > [!NOTE]
-> This is really just something I made for myself to help document component libraries, so it probably has a lot of limitations and quirks since I've only accounted for how I use it. But maybe it's useful for you - if so - please feel free to make issues and pull requests 😊
+> This is really something I made for myself to help with documentation, so it has a lot of limitations and quirks since I've only accounted for how I use it specifically. But maybe it's useful for you - if so - please feel free to make issues and pull requests! 😊
 
 # v-mark-docs
 
@@ -30,13 +30,9 @@ export default defineConfig({
 })
 ```
 
-### Add types for `.md` imports in `tsconfig.json`
+### Copy `docs` folder from the example
 
-_Coming soon_
-
-## Options
-
-@TODO
+Copy the `docs` folder from the example project! Every markdown file you want to include as a route requires a `title` and `slug` property in it's [frontmatter](#frontmatter).
 
 ### Plugins
 
@@ -48,11 +44,9 @@ You can customize the markdown-it instance using the `setup` and `highlight` opt
 
 ### Frontmatter
 
-You can acccess frontmatter data using the `$frontmatter` variable.
+You can then access the `frontmatter` through the injected value.
 
-_Every markdown file you want to have included in the router requires a `title` and `slug`._
-
-Other markdown-it packages do not have access to this variable - so for example if using a `$frontmatter` variable inside a title - you should specify the id for the title so that [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor) doesn't end up with weird looking links - and [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs) does not have access to the variables either.
+Other `markdown-it` packages **do not have access to this variable** - so for example if using a `$frontmatter` variable inside a heading tag - you should specify the id for the title so that [markdown-it-anchor](https://github.com/valeriangalliat/markdown-it-anchor) doesn't end up with weird looking links.
 
 ```md
 ---
@@ -61,27 +55,15 @@ slug: "/title"
 description: "Description"
 ---
 
-# {{ $frontmatter.title }} {#title}
+<script setup>
+  import { inject } from 'vue';
 
-{{ $frontmatter.description }}
-```
+  const fm = inject('frontmatter');
+</script>
 
-### Routes
+# {{ fm.title }}
 
-You can import an array of the routes available.
-
-```ts
-import { routes } from "v-mark-docs:routes";
-
-/**
- * @example result
- *
- * [{
- *   path: "/title",
- *   title: "Title",
- *   component: TitleDocumentationComponent
- * }]
- */
+{{ fm.description }}
 ```
 
 ## Run the example

@@ -1,7 +1,7 @@
 {
   "name": "v-mark-docs",
   "description": "Markdown related utilities for documenting Vue components.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "keywords": [
     "vue",
     "markdown",
@@ -32,7 +32,8 @@
   "peerDependencies": {
     "typescript": "^5.9.3",
     "vite": "^7.2.2",
-    "vue": "^3.5.22"
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3"
   },
   "dependencies": {
     "@mdit-vue/plugin-component": "^3.0.2",

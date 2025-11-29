@@ -1,14 +1,20 @@
 declare module "*.md" {
-  import { Component, VueElement } from "vue";
+  import { Component } from "vue";
+
   const markdown: Component;
+
   export default markdown;
 }
 
 declare module "v-mark-docs:routes" {
-  import { Component } from "vue";
   import { RouteRecordRaw } from "vue-router";
 
-  const routes: RouteRecordRaw[];
+  const routes: (Omit<RouteRecordRaw, "meta"> & {
+    meta: Record<string, unknown> & {
+      title: string;
+      slug: title;
+    };
+  })[];
 
   export { routes };
 }

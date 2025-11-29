@@ -19,10 +19,8 @@ export const indexTs = (cwd: string) => join(cwd, "site", "index.ts");
 
 export const client = join(dirname, "client");
 
-export const indexHtml = (file: string) => join(client, file);
-
-export const createApp = join(client, "entry.js");
+export const createApp = join(client, "app.js");
 
 export const readIndexHtml = (file: string) => {
-  return readFileSync(indexHtml(file), "utf-8").replace("__TITLE__", "Documentation");
+  return readFileSync(join(client, file), "utf-8").replace("__TITLE__", "Documentation");
 };

@@ -41,16 +41,6 @@ interface FullMarkdownItEnv extends MarkdownItEnv {
  * Processes blocks with the lang set to `md` into HTML,
  * and turns `.md` files into single file vue components
  * - using `markdown-it`.
- *
- * This requires adding `/\.md$/` as
- * part of the `include` option for Vue
- * to allow SFC imports of `.md` files.
- *
- * ```ts
- * export default defineConfig({
- *   plugins: [vue({ include: [/\.vue$/, /\.md$/] })],
- * })
- * ```
  */
 export const markdownPlugin = (options?: MarkdownPluginOptions): PluginOption => {
   const md = markdown({
@@ -86,38 +76,17 @@ export const markdownPlugin = (options?: MarkdownPluginOptions): PluginOption =>
 
         const html = md.render(code, env);
 
-        const replaceFrontMatterVariables = (text: string) => {
-          if (!env.frontmatter) {
-            return text;
-          }
-
-          let copy = text.replaceAll(/{{ ?\$frontmatter\.([A-z]*) ?}}/g, "$frontmatter.$1");
-
-          for (const property in env.frontmatter) {
-            const value = env.frontmatter[property] as string | number | undefined;
-
-            const formattedValue = typeof value === "number" ? value.toString() : (value ?? "");
-            copy = copy.replaceAll(`$frontmatter.${property}`, formattedValue);
-          }
-
-          return copy;
-        };
-
         /**
          * If it's a markdown block, return the
          * html directly - otherwise create
          * a single file component.
          */
         if (id.endsWith("lang.md")) {
-          return replaceFrontMatterVariables(html);
+          return html;
         } else {
           const template = env.sfcBlocks?.template?.content ?? "";
 
-          let script = env.sfcBlocks?.scriptSetup?.contentStripped ?? "";
-
-          if (env.frontmatter) {
-            script += `\nconst $frontmatter = ${JSON.stringify(env.frontmatter)};`;
-          }
+          const script = env.sfcBlocks?.scriptSetup?.contentStripped ?? "";
 
           const styles = env.sfcBlocks?.styles.map((s) => s.content).join("\n\n") ?? "";
 

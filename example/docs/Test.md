@@ -3,6 +3,12 @@ title: "Test"
 slug: "/test"
 ---
 
-# {{ $frontmatter.title }}
+<script setup>
+  import { inject } from 'vue';
+
+  const fm = inject('frontmatter');
+</script>
+
+# {{ fm.title }}
 
 There are some markdown plugins tested.

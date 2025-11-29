@@ -4,7 +4,7 @@
       <template v-for="route of routes" :key="route.path">
         <li>
           <router-link :to="route.path">
-            {{ route.title }}
+            {{ route.meta.title }}
           </router-link>
         </li>
       </template>

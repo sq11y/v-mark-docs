@@ -5,12 +5,16 @@ slug: "/button"
 ---
 
 <script setup>
+  import { inject } from 'vue';
+
   import ButtonComponent from './Button.vue';
+
+  const fm = inject('frontmatter');
 </script>
 
-# {{ $frontmatter.title }}
+# {{ fm.title }}
 
-_{{ $frontmatter.description}}_
+_{{ fm.description}}_
 
 Alongside the default plugins - there is an extra markdown plugin you can enable through the options, documenting components with e.g. `[?Button]: ./Button.vue`.
 

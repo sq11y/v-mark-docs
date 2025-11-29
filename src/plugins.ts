@@ -11,7 +11,7 @@ import { markdownPlugin } from "./markdown/index.js";
 import { root } from "./files.js";
 
 export const plugins = async (resolvedConfig: ResolvedConfig) => [
-  await clientPlugin(resolvedConfig),
+  clientPlugin(resolvedConfig),
   routerPlugin(root),
 
   markdownPlugin({

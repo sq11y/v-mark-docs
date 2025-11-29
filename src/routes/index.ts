@@ -7,7 +7,7 @@ import fm, { type FrontMatterResult } from "front-matter";
 
 type Page = {
   path: string;
-  frontMatter: FrontMatterResult<{ slug: string; title: string }>["attributes"];
+  frontmatter: FrontMatterResult<{ slug: string; title: string }>["attributes"];
 };
 
 const plugin = (pages: Page[]): PluginOption => {
@@ -31,18 +31,18 @@ const plugin = (pages: Page[]): PluginOption => {
           .join("\n");
 
         const routes = pages.map((route) => ({
-          path: route.frontMatter!.slug,
-          title: route.frontMatter.title,
+          path: route.frontmatter.slug,
+          meta: route.frontmatter,
         }));
 
-        const stringRoutes = routes.map((route, i) => {
-          return `{
+        const stringRoutes = routes.map((route, i) =>
+          `{
             path: "${route.path}",
-            title: "${route.title}",
+            meta: ${JSON.stringify(route.meta)},
 
             component: Component${i},
-          }`.trim();
-        });
+          }`.trim(),
+        );
 
         const exports = `export const routes = [${stringRoutes.join(",\n")}]`;
 
@@ -60,12 +60,14 @@ export const routerPlugin = (cwd: string): PluginOption => {
       path,
       content: readFileSync(path, "utf-8"),
     }))
-    .map(
-      (file): Page => ({
-        path: file.path,
-        frontMatter: fm(file.content).attributes as any,
-      }),
-    );
+    .map((file) => ({
+      path: file.path,
+      frontmatter: (fm(file.content).attributes ?? {}) as Record<string, unknown>,
+    }))
+    .filter((file): file is Page => {
+      const { title, slug } = file.frontmatter;
+      return typeof title === "string" && typeof slug === "string";
+    });
 
   return plugin(pages);
 };
